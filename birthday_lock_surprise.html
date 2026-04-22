@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fce4ec 0%, #e8eaf6 35%, #e0f7fa 70%, #f9fbe7 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    padding: 2rem;
+  }
+
+  .page { width: 100%; max-width: 420px; text-align: center; }
+
+  /* LOCK SCREEN */
+  #lockScreen { animation: fadeIn 0.6s ease; }
+
+  .top-label {
+    font-family: 'DM Serif Display', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #b39ddb;
+    margin-bottom: 2rem;
+  }
+
+  .lock-card {
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(16px);
+    border-radius: 28px;
+    padding: 2.5rem 2rem;
+    border: 1.5px solid rgba(255,255,255,0.9);
+    box-shadow: 0 8px 40px rgba(179,157,219,0.15);
+  }
+
+  .lock-icon {
+    width: 64px; height: 64px;
+    margin: 0 auto 1.5rem;
+    position: relative;
+  }
+  .lock-svg { width: 64px; height: 64px; }
+
+  .lock-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: #7e57c2;
+    margin-bottom: 0.4rem;
+  }
+  .lock-sub {
+    font-size: 13px;
+    color: #9e9e9e;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+
+  /* DIGIT INPUTS */
+  .digit-row {
+    display: flex; gap: 12px; justify-content: center; margin-bottom: 1.5rem;
+  }
+  .digit-box {
+    width: 58px; height: 68px;
+    border-radius: 16px;
+    border: 2px solid transparent;
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    text-align: center;
+    outline: none;
+    transition: all 0.25s;
+    color: #5c3d99;
+    caret-color: #ce93d8;
+  }
+  .digit-box:nth-child(1) { background: #fce4ec; border-color: #f8bbd0; }
+  .digit-box:nth-child(2) { background: #ede7f6; border-color: #d1c4e9; }
+  .digit-box:nth-child(3) { background: #e8eaf6; border-color: #c5cae9; }
+  .digit-box:nth-child(4) { background: #e8f5e9; border-color: #c8e6c9; }
+
+  .digit-box:focus {
+    transform: scale(1.08);
+    box-shadow: 0 4px 20px rgba(179,157,219,0.35);
+  }
+  .digit-box.shake {
+    animation: shake 0.4s ease;
+    border-color: #f48fb1 !important;
+  }
+
+  .unlock-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(135deg, #ce93d8, #9fa8da);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 4px 20px rgba(206,147,216,0.4);
+  }
+  .unlock-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(206,147,216,0.5); }
+  .unlock-btn:active { transform: translateY(0); }
+
+  .hint {
+    font-size: 12px;
+    color: #bdbdbd;
+    margin-top: 1.2rem;
+    font-style: italic;
+  }
+
+  .error-msg {
+    font-size: 12px;
+    color: #e91e8c;
+    margin-top: 0.8rem;
+    min-height: 16px;
+    transition: opacity 0.3s;
+  }
+
+  /* SURPRISE SCREEN */
+  #surpriseScreen {
+    display: none;
+    animation: popIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .confetti-row {
+    display: flex; justify-content: center; gap: 8px;
+    font-size: 22px; margin-bottom: 1.5rem;
+  }
+  .confetti-row span { animation: bounce 1.2s ease infinite; }
+  .confetti-row span:nth-child(2) { animation-delay: 0.1s; }
+  .confetti-row span:nth-child(3) { animation-delay: 0.2s; }
+  .confetti-row span:nth-child(4) { animation-delay: 0.3s; }
+  .confetti-row span:nth-child(5) { animation-delay: 0.4s; }
+
+  .surprise-card {
+    background: rgba(255,255,255,0.78);
+    backdrop-filter: blur(16px);
+    border-radius: 28px;
+    padding: 2.5rem 2rem;
+    border: 1.5px solid rgba(255,255,255,0.9);
+    box-shadow: 0 8px 40px rgba(179,157,219,0.18);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .surprise-card::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(252,228,236,0.6), transparent);
+    border-radius: 50%;
+  }
+  .surprise-card::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -30px;
+    width: 100px; height: 100px;
+    background: radial-gradient(circle, rgba(232,234,246,0.6), transparent);
+    border-radius: 50%;
+  }
+
+  .age-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #fce4ec, #ede7f6);
+    border: 1.5px solid #f8bbd0;
+    border-radius: 50px;
+    padding: 6px 20px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #9c4f8a;
+    margin-bottom: 1.2rem;
+  }
+
+  .wish-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 30px;
+    color: #6a1b9a;
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+
+  .divider {
+    display: flex; align-items: center; gap: 12px; margin: 1.2rem 0;
+  }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #e0d0f0, transparent); }
+  .divider-dot { width: 6px; height: 6px; border-radius: 50%; background: #d1c4e9; }
+
+  .wish-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #616161;
+    font-weight: 300;
+  }
+
+  .wish-text em {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    color: #9c4f8a;
+  }
+
+  .dots-row {
+    display: flex; justify-content: center; gap: 8px; margin-top: 2rem;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    animation: pulse 2s ease infinite;
+  }
+  .dot:nth-child(1) { background: #f48fb1; }
+  .dot:nth-child(2) { background: #ce93d8; animation-delay: 0.3s; }
+  .dot:nth-child(3) { background: #9fa8da; animation-delay: 0.6s; }
+  .dot:nth-child(4) { background: #80cbc4; animation-delay: 0.9s; }
+  .dot:nth-child(5) { background: #a5d6a7; animation-delay: 1.2s; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes popIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.4); opacity: 1; }
+  }
+  @keyframes unlocking {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- LOCK SCREEN -->
+  <div id="lockScreen">
+    <p class="top-label">a little something for you</p>
+
+    <div class="lock-card">
+      <div class="lock-icon" id="lockIcon">
+        <svg class="lock-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="12" y="28" width="40" height="28" rx="10" fill="#ede7f6" stroke="#ce93d8" stroke-width="2"/>
+          <path d="M20 28V22C20 14.27 44 14.27 44 22V28" stroke="#ce93d8" stroke-width="2.5" stroke-linecap="round" fill="none" id="lockArch"/>
+          <circle cx="32" cy="42" r="4" fill="#ce93d8"/>
+          <line x1="32" y1="46" x2="32" y2="51" stroke="#ce93d8" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <h2 class="lock-title">enter the key</h2>
+      <p class="lock-sub">type in your birth year to unlock your surprise</p>
+
+      <div class="digit-row" id="digitRow">
+        <input class="digit-box" type="text" maxlength="1" inputmode="numeric" id="d1" />
+        <input class="digit-box" type="text" maxlength="1" inputmode="numeric" id="d2" />
+        <input class="digit-box" type="text" maxlength="1" inputmode="numeric" id="d3" />
+        <input class="digit-box" type="text" maxlength="1" inputmode="numeric" id="d4" />
+      </div>
+
+      <button class="unlock-btn" onclick="tryUnlock()">✦ unlock ✦</button>
+      <p class="error-msg" id="errorMsg"></p>
+      <p class="hint">psst — it's a 4-digit year ✨</p>
+    </div>
+  </div>
+
+  <!-- SURPRISE SCREEN -->
+  <div id="surpriseScreen">
+    <div class="confetti-row">
+      <span>🌸</span><span>✨</span><span>🎂</span><span>✨</span><span>🌸</span>
+    </div>
+
+    <div class="surprise-card">
+      <div class="age-badge">turning 21 this year</div>
+
+      <h1 class="wish-title">happy birthday,<br><em>beautiful soul</em></h1>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-dot"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <p class="wish-text">
+        Twenty-one years of being wonderfully, completely <em>you</em> —
+        and the world is so much brighter for it.<br><br>
+        May this year bring you soft mornings, loud laughter,
+        and every dream you've been quietly holding onto.
+        You deserve all of it — and then some. 🌷
+      </p>
+
+      <div class="dots-row">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const digits = ['d1','d2','d3','d4'];
+  const SECRET = '2004';
+
+  digits.forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => {
+      const v = el.value.replace(/\D/g,'');
+      el.value = v.slice(-1);
+      if (el.value && i < 3) document.getElementById(digits[i+1]).focus();
+    });
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !el.value && i > 0) {
+        document.getElementById(digits[i-1]).focus();
+      }
+      if (e.key === 'Enter') tryUnlock();
+    });
+    el.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g,'');
+      if (text.length === 4) {
+        digits.forEach((did, idx) => { document.getElementById(did).value = text[idx] || ''; });
+        document.getElementById(digits[3]).focus();
+      }
+    });
+  });
+
+  document.getElementById('d1').focus();
+
+  function getCode() {
+    return digits.map(id => document.getElementById(id).value).join('');
+  }
+
+  function tryUnlock() {
+    const code = getCode();
+    const err = document.getElementById('errorMsg');
+
+    if (code.length < 4) {
+      err.textContent = 'enter all 4 digits ✦';
+      shakeAll();
+      return;
+    }
+
+    if (code === SECRET) {
+      err.textContent = '';
+      document.getElementById('lockIcon').style.animation = 'unlocking 0.4s ease';
+      setTimeout(() => {
+        document.getElementById('lockScreen').style.display = 'none';
+        const s = document.getElementById('surpriseScreen');
+        s.style.display = 'block';
+      }, 500);
+    } else {
+      err.textContent = 'hmm, that's not quite right — try again 💜';
+      shakeAll();
+      digits.forEach(id => { document.getElementById(id).value = ''; });
+      document.getElementById('d1').focus();
+    }
+  }
+
+  function shakeAll() {
+    const boxes = document.querySelectorAll('.digit-box');
+    boxes.forEach(b => {
+      b.classList.remove('shake');
+      void b.offsetWidth;
+      b.classList.add('shake');
+    });
+    setTimeout(() => boxes.forEach(b => b.classList.remove('shake')), 500);
+  }
+</script>
+</body>
+</html>
