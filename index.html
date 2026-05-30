@@ -64,12 +64,7 @@ html, body {
   overflow: hidden;
 }
 
-.card-corner {
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  opacity: 0.55;
-}
+.card-corner { position: absolute; width: 70px; height: 70px; opacity: 0.55; }
 .card-corner.tl { top: -2px; left: -2px; }
 .card-corner.tr { top: -2px; right: -2px; transform: scaleX(-1); }
 .card-corner.bl { bottom: -2px; left: -2px; transform: scaleY(-1); }
@@ -91,12 +86,7 @@ html, body {
   line-height: 1.6;
 }
 
-.digit-row {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 1.3rem;
-}
+.digit-row { display: flex; gap: 10px; justify-content: center; margin-bottom: 1.3rem; }
 .digit-box {
   flex: 1;
   max-width: 68px;
@@ -141,12 +131,10 @@ html, body {
 .err-msg { font-size: 12px; color: #c07060; margin-top: 0.8rem; min-height: 18px; font-style: italic; }
 .hint-txt { font-size: 11px; color: #c0a080; margin-top: 0.8rem; font-style: italic; }
 
-/* ── SURPRISE ── */
+/* SURPRISE */
 #cc-surprise { display: none; }
 
-.bloom-row {
-  display: flex; justify-content: center; gap: 6px; margin-bottom: 1.1rem;
-}
+.bloom-row { display: flex; justify-content: center; gap: 6px; margin-bottom: 1.1rem; }
 .bloom-row span { display: inline-block; font-size: 20px; animation: sway 2s ease-in-out infinite; }
 .bloom-row span:nth-child(2) { animation-delay: 0.2s; }
 .bloom-row span:nth-child(3) { animation-delay: 0.4s; }
@@ -166,6 +154,7 @@ html, body {
   margin-bottom: 0.9rem;
 }
 
+/* Animated name */
 .wish-title {
   font-family: 'Playfair Display', serif;
   font-size: 26px;
@@ -175,16 +164,18 @@ html, body {
 }
 .wish-title em { color: #b05878; font-style: italic; }
 
+.name-chars span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(18px);
+  animation: letterIn 0.45s forwards;
+}
+
 .vine-divider { display: flex; align-items: center; gap: 10px; margin: 0.9rem 0; }
 .vine-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #d4c4a4, transparent); }
 .vine-dot { font-size: 14px; }
 
-.wish-body {
-  font-size: 13.5px;
-  line-height: 1.9;
-  color: #705040;
-  font-weight: 300;
-}
+.wish-body { font-size: 13.5px; line-height: 1.9; color: #705040; font-weight: 300; }
 .wish-body em { font-family: 'Playfair Display', serif; font-style: italic; color: #9c5878; }
 
 .petal-dots { display: flex; justify-content: center; gap: 8px; margin-top: 1.4rem; }
@@ -195,7 +186,7 @@ html, body {
 .pdot:nth-child(4) { background: #c4a4e0; animation-delay: 1.05s; }
 .pdot:nth-child(5) { background: #f4b894; animation-delay: 1.4s; }
 
-/* ── MUSIC BUTTON ── */
+/* MUSIC BUTTON */
 .music-btn {
   display: flex;
   align-items: center;
@@ -221,9 +212,19 @@ html, body {
 .music-note { font-size: 17px; display: inline-block; }
 .music-note.bouncing { animation: noteBounce 0.9s ease-in-out infinite; }
 
-/* hidden YouTube iframe */
-#yt-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+/* CONFETTI CANVAS */
+#confetti-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 999;
+}
 
+/* hidden YT player */
+#yt-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; overflow: hidden; }
+
+@keyframes letterIn { to { opacity: 1; transform: translateY(0); } }
 @keyframes noteBounce { 0%,100%{transform:translateY(0) rotate(-10deg)} 50%{transform:translateY(-5px) rotate(10deg)} }
 @keyframes sway { 0%,100%{transform:rotate(-6deg) translateY(0)} 50%{transform:rotate(6deg) translateY(-4px)} }
 @keyframes pdpulse { 0%,100%{transform:scale(1);opacity:.7} 50%{transform:scale(1.5);opacity:1} }
@@ -234,15 +235,15 @@ html, body {
 </head>
 <body>
 
-<div id="cc-wrap">
+<canvas id="confetti-canvas"></canvas>
 
-  <!-- Background florals -->
+<div id="cc-wrap">
   <svg class="bg-floral" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
     <g opacity="0.5"><circle cx="30" cy="40" r="14" fill="#f9c4c8"/><circle cx="30" cy="40" r="5.5" fill="#fde8d0"/><ellipse cx="17" cy="40" rx="7" ry="4" fill="#f4a4b0" transform="rotate(-40 17 40)"/><ellipse cx="43" cy="40" rx="7" ry="4" fill="#f4a4b0" transform="rotate(40 43 40)"/><ellipse cx="30" cy="26" rx="4" ry="7" fill="#f4a4b0"/><ellipse cx="30" cy="54" rx="4" ry="7" fill="#f4a4b0"/><line x1="30" y1="53" x2="37" y2="76" stroke="#a8c880" stroke-width="1.5" stroke-linecap="round"/><ellipse cx="42" cy="72" rx="8" ry="5" fill="#b8d890" transform="rotate(-30 42 72)"/></g>
-    <g opacity="0.42" transform="translate(378,30)"><circle cx="0" cy="0" r="13" fill="#d4b8f0"/><circle cx="0" cy="0" r="5" fill="#f0e4fc"/><ellipse cx="-14" cy="0" rx="6.5" ry="4" fill="#c4a4e8" transform="rotate(-30 -14 0)"/><ellipse cx="14" cy="0" rx="6.5" ry="4" fill="#c4a4e8" transform="rotate(30 14 0)"/><ellipse cx="0" cy="-14" rx="4" ry="6.5" fill="#c4a4e8"/><ellipse cx="0" cy="14" rx="4" ry="6.5" fill="#c4a4e8"/><line x1="0" y1="14" x2="-6" y2="40" stroke="#a8c880" stroke-width="1.5" stroke-linecap="round"/><ellipse cx="-10" cy="36" rx="7" ry="4" fill="#b8d890" transform="rotate(20 -10 36)"/></g>
-    <g opacity="0.35" transform="translate(8,720)"><circle cx="0" cy="0" r="11" fill="#fce0a4"/><circle cx="0" cy="0" r="4" fill="#fff4d4"/><ellipse cx="-12" cy="0" rx="6" ry="3.5" fill="#f4cc78" transform="rotate(-20 -12 0)"/><ellipse cx="12" cy="0" rx="6" ry="3.5" fill="#f4cc78" transform="rotate(20 12 0)"/><ellipse cx="0" cy="-12" rx="3.5" ry="6" fill="#f4cc78"/><ellipse cx="0" cy="12" rx="3.5" ry="6" fill="#f4cc78"/><line x1="4" y1="12" x2="10" y2="36" stroke="#a8c880" stroke-width="1.5" stroke-linecap="round"/></g>
+    <g opacity="0.42" transform="translate(378,30)"><circle cx="0" cy="0" r="13" fill="#d4b8f0"/><circle cx="0" cy="0" r="5" fill="#f0e4fc"/><ellipse cx="-14" cy="0" rx="6.5" ry="4" fill="#c4a4e8" transform="rotate(-30 -14 0)"/><ellipse cx="14" cy="0" rx="6.5" ry="4" fill="#c4a4e8" transform="rotate(30 14 0)"/><ellipse cx="0" cy="-14" rx="4" ry="6.5" fill="#c4a4e8"/><ellipse cx="0" cy="14" rx="4" ry="6.5" fill="#c4a4e8"/><line x1="0" y1="14" x2="-6" y2="40" stroke="#a8c880" stroke-width="1.5" stroke-linecap="round"/></g>
+    <g opacity="0.35" transform="translate(8,720)"><circle cx="0" cy="0" r="11" fill="#fce0a4"/><circle cx="0" cy="0" r="4" fill="#fff4d4"/><ellipse cx="-12" cy="0" rx="6" ry="3.5" fill="#f4cc78" transform="rotate(-20 -12 0)"/><ellipse cx="12" cy="0" rx="6" ry="3.5" fill="#f4cc78" transform="rotate(20 12 0)"/><ellipse cx="0" cy="-12" rx="3.5" ry="6" fill="#f4cc78"/><ellipse cx="0" cy="12" rx="3.5" ry="6" fill="#f4cc78"/></g>
     <g opacity="0.4" transform="translate(375,720)"><circle cx="0" cy="0" r="12" fill="#f4b8c8"/><circle cx="0" cy="0" r="5" fill="#fde4ec"/><ellipse cx="-13" cy="0" rx="6" ry="4" fill="#e89cb0" transform="rotate(15 -13 0)"/><ellipse cx="13" cy="0" rx="6" ry="4" fill="#e89cb0" transform="rotate(-15 13 0)"/><ellipse cx="0" cy="-13" rx="4" ry="6" fill="#e89cb0"/><ellipse cx="0" cy="13" rx="4" ry="6" fill="#e89cb0"/></g>
-    <g opacity="0.28" transform="translate(200,10)"><ellipse cx="0" cy="0" rx="5" ry="9" fill="#c8dca8"/><ellipse cx="12" cy="4" rx="5" ry="9" fill="#b8d090" transform="rotate(25 12 4)"/><ellipse cx="-12" cy="4" rx="5" ry="9" fill="#b8d090" transform="rotate(-25 -12 4)"/><line x1="0" y1="9" x2="0" y2="30" stroke="#a0b870" stroke-width="1.5" stroke-linecap="round"/><circle cx="0" cy="-2" r="5" fill="#f4e0b8"/></g>
+    <g opacity="0.28" transform="translate(200,10)"><ellipse cx="0" cy="0" rx="5" ry="9" fill="#c8dca8"/><ellipse cx="12" cy="4" rx="5" ry="9" fill="#b8d090" transform="rotate(25 12 4)"/><ellipse cx="-12" cy="4" rx="5" ry="9" fill="#b8d090" transform="rotate(-25 -12 4)"/><circle cx="0" cy="-2" r="5" fill="#f4e0b8"/></g>
     <line x1="18" y1="130" x2="50" y2="260" stroke="#c8dca8" stroke-width="1" stroke-dasharray="4,6" opacity="0.4"/>
     <line x1="370" y1="220" x2="345" y2="420" stroke="#e8c4d0" stroke-width="1" stroke-dasharray="4,6" opacity="0.35"/>
   </svg>
@@ -294,7 +295,12 @@ html, body {
         <svg class="card-corner br" viewBox="0 0 80 80" fill="none"><circle cx="16" cy="20" r="7" fill="#d4c4f0"/><circle cx="16" cy="20" r="2.5" fill="#ede4fc"/><ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#b8a4e0" transform="rotate(-30 8 20)"/><ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#b8a4e0" transform="rotate(30 24 20)"/><ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#b8a4e0"/><ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#b8a4e0"/></svg>
 
         <div class="age-ribbon">turning more beautiful this year</div>
-        <h1 class="wish-title">happy birthday,<br><em>My dear Shifa 🍉</em></h1>
+
+        <h1 class="wish-title">
+          happy birthday,<br>
+          <em id="name-line"><span class="name-chars" id="name-chars"></span> 🍉</em>
+        </h1>
+
         <div class="vine-divider"><div class="vine-line"></div><span class="vine-dot">🌿</span><div class="vine-line"></div></div>
         <p class="wish-body">
           Like a garden in full bloom, you have grown into something
@@ -315,16 +321,14 @@ html, body {
       </div>
     </div>
 
-  </div><!-- .cc-page -->
-</div><!-- #cc-wrap -->
+  </div>
+</div>
 
-<!-- Hidden YouTube IFrame -->
-<div id="yt-player" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;"></div>
-
-<!-- YouTube IFrame API -->
+<div id="yt-player"></div>
 <script src="https://www.youtube.com/iframe_api"></script>
+
 <script>
-/* ── LOCK LOGIC ── */
+/* ── LOCK ── */
 (function(){
   var ids = ['c1','c2','c3','c4'];
   var SECRET = '2004';
@@ -350,9 +354,13 @@ html, body {
       document.getElementById('cc-lock').style.display = 'none';
       var s  = document.getElementById('cc-surprise');
       var sc = document.getElementById('cc-scard');
-      s.style.display  = 'block';
+      s.style.display    = 'block';
       s.style.animation  = 'fadeup 0.7s ease';
       sc.style.animation = 'popin 0.7s cubic-bezier(0.175,0.885,0.32,1.275)';
+
+      animateName('My dear Shifa');
+      launchConfetti();
+      autoplayMusic();
     } else {
       err.textContent = "~ that's not quite right, try again ~";
       shake();
@@ -373,39 +381,126 @@ html, body {
   document.getElementById('c1').focus();
 })();
 
-/* ── YOUTUBE MUSIC ── */
-var ytPlayer   = null;
-var ytReady    = false;
-var isPlaying  = false;
-var VIDEO_ID   = 'xK4ZqrLys_k';
+/* ── NAME ANIMATION ── */
+function animateName(name) {
+  var container = document.getElementById('name-chars');
+  container.innerHTML = '';
+  name.split('').forEach(function(ch, i){
+    var span = document.createElement('span');
+    span.textContent = ch === ' ' ? '\u00a0' : ch;
+    span.style.animationDelay = (0.3 + i * 0.07) + 's';
+    container.appendChild(span);
+  });
+}
 
-function onYouTubeIframeAPIReady(){
+/* ── CONFETTI ── */
+function launchConfetti() {
+  var canvas = document.getElementById('confetti-canvas');
+  var ctx = canvas.getContext('2d');
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  var pieces = [];
+  var colors = ['#f4a4b4','#e8c47c','#a4c894','#c4a4e0','#f4b894','#f9c4c8','#d4b8f0','#fce0a4'];
+  var shapes = ['circle','rect','petal'];
+
+  for (var i = 0; i < 140; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: -Math.random() * canvas.height * 0.5,
+      r: Math.random() * 7 + 4,
+      d: Math.random() * 120 + 60,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      shape: shapes[Math.floor(Math.random() * shapes.length)],
+      tilt: Math.random() * Math.PI * 2,
+      tiltSpeed: (Math.random() - 0.5) * 0.1,
+      speed: Math.random() * 2 + 1.2,
+      opacity: 1
+    });
+  }
+
+  var frame = 0;
+  var maxFrames = 200;
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    frame++;
+    pieces.forEach(function(p){
+      p.y += p.speed;
+      p.tilt += p.tiltSpeed;
+      p.x += Math.sin(frame / p.d) * 1.2;
+      if (frame > 140) p.opacity = Math.max(0, p.opacity - 0.015);
+
+      ctx.save();
+      ctx.globalAlpha = p.opacity;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.tilt);
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      if (p.shape === 'circle') {
+        ctx.arc(0, 0, p.r, 0, Math.PI * 2);
+      } else if (p.shape === 'rect') {
+        ctx.rect(-p.r, -p.r * 0.5, p.r * 2, p.r);
+      } else {
+        ctx.ellipse(0, 0, p.r, p.r * 0.5, 0, 0, Math.PI * 2);
+      }
+      ctx.fill();
+      ctx.restore();
+    });
+
+    if (frame < maxFrames) {
+      requestAnimationFrame(draw);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+  draw();
+}
+
+/* ── YOUTUBE MUSIC ── */
+var ytPlayer  = null;
+var ytReady   = false;
+var isPlaying = false;
+var VIDEO_ID  = 'xK4ZqrLys_k';
+
+function onYouTubeIframeAPIReady() {
   ytPlayer = new YT.Player('yt-player', {
     height: '1', width: '1',
     videoId: VIDEO_ID,
     playerVars: { autoplay: 0, controls: 0, playsinline: 1 },
-    events: {
-      onReady: function(){ ytReady = true; }
-    }
+    events: { onReady: function(){ ytReady = true; } }
   });
 }
 
-function toggleMusic(){
+function autoplayMusic() {
+  var attempt = 0;
+  var interval = setInterval(function(){
+    attempt++;
+    if (ytReady && ytPlayer) {
+      ytPlayer.playVideo();
+      isPlaying = true;
+      document.getElementById('music-toggle').classList.add('playing');
+      document.getElementById('music-note-icon').classList.add('bouncing');
+      document.getElementById('music-label').textContent = 'pause the music';
+      clearInterval(interval);
+    }
+    if (attempt > 30) clearInterval(interval);
+  }, 200);
+}
+
+function toggleMusic() {
   var btn      = document.getElementById('music-toggle');
   var noteIcon = document.getElementById('music-note-icon');
   var lbl      = document.getElementById('music-label');
 
-  if (!ytReady) {
-    lbl.textContent = 'loading… try again in a sec 🌿';
-    return;
-  }
+  if (!ytReady) { lbl.textContent = 'loading… try again 🌿'; return; }
 
   if (isPlaying) {
     ytPlayer.pauseVideo();
     isPlaying = false;
     btn.classList.remove('playing');
     noteIcon.classList.remove('bouncing');
-    lbl.textContent = 'Tap to play the melody';
+    lbl.textContent = 'play a little melody';
   } else {
     ytPlayer.playVideo();
     isPlaying = true;
