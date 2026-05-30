@@ -1,336 +1,151 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Lato:wght@300;400&display=swap');
-
-* { margin:0; padding:0; box-sizing:border-box; }
-
-#cc-wrap {
-  font-family: 'Lato', sans-serif;
-  background: #fdf6ee;
-  min-height: 620px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
-  position: relative;
-  overflow: hidden;
-  border-radius: 20px;
+*{margin:0;padding:0;box-sizing:border-box;}
+#cc-wrap{
+  font-family:'Lato',sans-serif;
+  background:#fdf6ee;
+  min-height:100%;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:1.2rem 0.75rem 2rem;
+  position:relative;
+  overflow:hidden;
+  border-radius:16px;
 }
-
-.bg-floral {
-  position: absolute; inset: 0;
-  pointer-events: none;
-  z-index: 0;
+.bg-floral{position:absolute;inset:0;pointer-events:none;z-index:0;}
+.cc-page{position:relative;z-index:1;width:100%;max-width:360px;text-align:center;}
+.eyebrow{font-family:'Playfair Display',serif;font-style:italic;font-size:12px;color:#b07d5c;letter-spacing:2px;margin-bottom:1rem;}
+.card{background:rgba(255,252,245,0.95);border-radius:20px;padding:1.6rem 1.2rem;border:1.5px solid #e8d8c4;box-shadow:0 4px 24px rgba(160,120,80,0.10);position:relative;overflow:hidden;}
+.card-corner{position:absolute;width:64px;height:64px;opacity:0.55;}
+.card-corner.tl{top:-2px;left:-2px;}
+.card-corner.tr{top:-2px;right:-2px;transform:scaleX(-1);}
+.card-corner.bl{bottom:-2px;left:-2px;transform:scaleY(-1);}
+.card-corner.br{bottom:-2px;right:-2px;transform:scale(-1,-1);}
+.lock-icon-wrap{margin:0 auto 0.9rem;width:52px;height:52px;}
+.lock-title{font-family:'Playfair Display',serif;font-size:20px;color:#5c3a1e;margin-bottom:0.25rem;}
+.lock-sub{font-size:12px;color:#a08060;font-weight:300;margin-bottom:1.4rem;line-height:1.6;}
+.digit-row{display:flex;gap:8px;justify-content:center;margin-bottom:1.2rem;}
+.digit-box{
+  width:calc(22vw - 8px);
+  max-width:58px;
+  min-width:44px;
+  height:60px;
+  border-radius:12px;
+  border:1.5px solid #d4b896;
+  background:#fffaf4;
+  font-family:'Playfair Display',serif;
+  font-size:22px;
+  text-align:center;
+  outline:none;
+  color:#5c3a1e;
+  transition:all 0.2s;
+  caret-color:#c9856a;
+  -webkit-appearance:none;
 }
-
-.cc-page {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
+.digit-box:nth-child(1){background:#fff0f3;border-color:#f0c4c8;}
+.digit-box:nth-child(2){background:#fff8f0;border-color:#f0d8b4;}
+.digit-box:nth-child(3){background:#f4f8f0;border-color:#c8dbb4;}
+.digit-box:nth-child(4){background:#f4f0ff;border-color:#d4c4f0;}
+.digit-box:focus{transform:scale(1.06);box-shadow:0 3px 12px rgba(180,120,80,0.18);}
+.unlock-btn{
+  width:100%;
+  padding:12px;
+  border-radius:50px;
+  border:1.5px solid #c9a07a;
+  background:linear-gradient(135deg,#e8c4a0,#d4a882);
+  color:#4a2c10;
+  font-family:'Playfair Display',serif;
+  font-size:14px;
+  font-style:italic;
+  cursor:pointer;
+  transition:all 0.22s;
+  box-shadow:0 3px 14px rgba(180,120,60,0.18);
 }
-
-.eyebrow {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 13px;
-  color: #b07d5c;
-  letter-spacing: 2px;
-  margin-bottom: 1.4rem;
+.unlock-btn:active{transform:scale(0.98);}
+.err-msg{font-size:11px;color:#c07060;margin-top:0.7rem;min-height:16px;font-style:italic;}
+.hint-txt{font-size:10px;color:#c0a080;margin-top:0.7rem;font-style:italic;}
+#cc-surprise{display:none;}
+.bloom-row{display:flex;justify-content:center;gap:6px;margin-bottom:1rem;}
+.bloom-row span{display:inline-block;font-size:18px;animation:sway 2s ease-in-out infinite;}
+.bloom-row span:nth-child(2){animation-delay:0.2s;}
+.bloom-row span:nth-child(3){animation-delay:0.4s;}
+.bloom-row span:nth-child(4){animation-delay:0.6s;}
+.bloom-row span:nth-child(5){animation-delay:0.8s;}
+.age-ribbon{display:inline-block;background:#fce8d8;border:1px solid #e8c4a4;border-radius:50px;padding:4px 16px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#9c5c30;margin-bottom:0.8rem;}
+.wish-title{font-family:'Playfair Display',serif;font-size:24px;color:#4a2c10;line-height:1.25;margin-bottom:0.5rem;}
+.wish-title em{color:#b05878;font-style:italic;}
+.vine-divider{display:flex;align-items:center;gap:8px;margin:0.8rem 0;}
+.vine-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,#d4c4a4,transparent);}
+.vine-dot{font-size:13px;}
+.wish-body{font-size:13px;line-height:1.9;color:#705040;font-weight:300;}
+.wish-body em{font-family:'Playfair Display',serif;font-style:italic;color:#9c5878;}
+.petal-dots{display:flex;justify-content:center;gap:8px;margin-top:1.4rem;}
+.pdot{width:7px;height:7px;border-radius:50%;animation:pdpulse 2.2s ease infinite;}
+.pdot:nth-child(1){background:#f4a4b4;}
+.pdot:nth-child(2){background:#e8c47c;animation-delay:0.35s;}
+.pdot:nth-child(3){background:#a4c894;animation-delay:0.7s;}
+.pdot:nth-child(4){background:#c4a4e0;animation-delay:1.05s;}
+.pdot:nth-child(5){background:#f4b894;animation-delay:1.4s;}
+.music-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin:1.2rem auto 0;
+  padding:10px 22px;
+  border-radius:50px;
+  border:1.5px solid #c9a07a;
+  background:rgba(255,252,245,0.9);
+  color:#7a4020;
+  font-family:'Lato',sans-serif;
+  font-size:13px;
+  cursor:pointer;
+  transition:all 0.22s;
+  width:fit-content;
 }
-
-.card {
-  background: rgba(255,252,245,0.93);
-  border-radius: 24px;
-  padding: 2.4rem 2rem;
-  border: 1.5px solid #e8d8c4;
-  box-shadow: 0 6px 32px rgba(160,120,80,0.10);
-  position: relative;
-  overflow: hidden;
-}
-
-.card-corner {
-  position: absolute;
-  width: 80px; height: 80px;
-  opacity: 0.55;
-}
-.card-corner.tl { top: -4px; left: -4px; }
-.card-corner.tr { top: -4px; right: -4px; transform: scaleX(-1); }
-.card-corner.bl { bottom: -4px; left: -4px; transform: scaleY(-1); }
-.card-corner.br { bottom: -4px; right: -4px; transform: scale(-1,-1); }
-
-.lock-icon-wrap { margin: 0 auto 1.2rem; width: 60px; height: 60px; }
-
-.lock-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 23px;
-  color: #5c3a1e;
-  margin-bottom: 0.3rem;
-}
-.lock-sub {
-  font-size: 13px;
-  color: #a08060;
-  font-weight: 300;
-  margin-bottom: 1.8rem;
-  line-height: 1.6;
-}
-
-.digit-row {
-  display: flex; gap: 10px; justify-content: center; margin-bottom: 1.4rem;
-}
-.digit-box {
-  width: 56px; height: 64px;
-  border-radius: 14px;
-  border: 1.5px solid #d4b896;
-  background: #fffaf4;
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
-  text-align: center;
-  outline: none;
-  color: #5c3a1e;
-  transition: all 0.2s;
-  caret-color: #c9856a;
-}
-.digit-box:nth-child(1) { background: #fff0f3; border-color: #f0c4c8; }
-.digit-box:nth-child(2) { background: #fff8f0; border-color: #f0d8b4; }
-.digit-box:nth-child(3) { background: #f4f8f0; border-color: #c8dbb4; }
-.digit-box:nth-child(4) { background: #f4f0ff; border-color: #d4c4f0; }
-.digit-box:focus { transform: scale(1.08); box-shadow: 0 4px 16px rgba(180,120,80,0.18); }
-
-.unlock-btn {
-  width: 100%;
-  padding: 13px;
-  border-radius: 50px;
-  border: 1.5px solid #c9a07a;
-  background: linear-gradient(135deg, #e8c4a0, #d4a882);
-  color: #4a2c10;
-  font-family: 'Playfair Display', serif;
-  font-size: 15px;
-  font-style: italic;
-  cursor: pointer;
-  transition: all 0.22s;
-  box-shadow: 0 3px 16px rgba(180,120,60,0.18);
-  letter-spacing: 0.5px;
-}
-.unlock-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 22px rgba(180,120,60,0.28); background: linear-gradient(135deg, #f0d0b0, #e0b890); }
-
-.err-msg { font-size: 12px; color: #c07060; margin-top: 0.8rem; min-height: 18px; font-style: italic; }
-.hint-txt { font-size: 11px; color: #c0a080; margin-top: 0.9rem; font-style: italic; }
-
-#cc-surprise { display: none; }
-
-.bloom-row {
-  display: flex; justify-content: center; gap: 6px; margin-bottom: 1.2rem;
-}
-.bloom-row span { display: inline-block; font-size: 20px; animation: sway 2s ease-in-out infinite; }
-.bloom-row span:nth-child(2) { animation-delay: 0.2s; }
-.bloom-row span:nth-child(3) { animation-delay: 0.4s; }
-.bloom-row span:nth-child(4) { animation-delay: 0.6s; }
-.bloom-row span:nth-child(5) { animation-delay: 0.8s; }
-
-.age-ribbon {
-  display: inline-block;
-  background: #fce8d8;
-  border: 1px solid #e8c4a4;
-  border-radius: 50px;
-  padding: 5px 20px;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #9c5c30;
-  margin-bottom: 1rem;
-  font-family: 'Lato', sans-serif;
-}
-
-.wish-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 28px;
-  color: #4a2c10;
-  line-height: 1.25;
-  margin-bottom: 0.6rem;
-}
-.wish-title em { color: #b05878; font-style: italic; }
-
-.vine-divider {
-  display: flex; align-items: center; gap: 10px;
-  margin: 1rem 0;
-}
-.vine-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #d4c4a4, transparent); }
-.vine-dot { font-size: 14px; }
-
-.wish-body {
-  font-size: 14px;
-  line-height: 1.95;
-  color: #705040;
-  font-weight: 300;
-}
-.wish-body em { font-family: 'Playfair Display', serif; font-style: italic; color: #9c5878; }
-
-.petal-dots {
-  display: flex; justify-content: center; gap: 8px; margin-top: 1.8rem;
-}
-.pdot {
-  width: 8px; height: 8px; border-radius: 50%;
-  animation: pdpulse 2.2s ease infinite;
-}
-.pdot:nth-child(1) { background: #f4a4b4; }
-.pdot:nth-child(2) { background: #e8c47c; animation-delay: 0.35s; }
-.pdot:nth-child(3) { background: #a4c894; animation-delay: 0.7s; }
-.pdot:nth-child(4) { background: #c4a4e0; animation-delay: 1.05s; }
-.pdot:nth-child(5) { background: #f4b894; animation-delay: 1.4s; }
-
-@keyframes sway { 0%,100%{transform:rotate(-6deg) translateY(0)} 50%{transform:rotate(6deg) translateY(-4px)} }
-@keyframes pdpulse { 0%,100%{transform:scale(1);opacity:.7} 50%{transform:scale(1.5);opacity:1} }
-@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
-@keyframes popin { from{opacity:0;transform:scale(0.82)} to{opacity:1;transform:scale(1)} }
-@keyframes fadeup { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.music-btn:active{transform:scale(0.97);}
+.music-btn.playing{background:linear-gradient(135deg,#fce0c8,#f4c4a4);border-color:#b8804a;}
+.music-note{font-size:16px;animation:noteBounce 1s ease-in-out infinite;display:inline-block;}
+.music-note.paused{animation:none;}
+@keyframes noteBounce{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-4px) rotate(10deg)}}
+@keyframes sway{0%,100%{transform:rotate(-6deg) translateY(0)}50%{transform:rotate(6deg) translateY(-4px)}}
+@keyframes pdpulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.5);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+@keyframes popin{from{opacity:0;transform:scale(0.85)}to{opacity:1;transform:scale(1)}}
+@keyframes fadeup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 </style>
 
 <div id="cc-wrap">
-
-  <svg class="bg-floral" viewBox="0 0 700 620" xmlns="http://www.w3.org/2000/svg">
-    <g opacity="0.55">
-      <circle cx="42" cy="38" r="14" fill="#f9c4c8"/>
-      <circle cx="42" cy="38" r="6" fill="#fde8d0"/>
-      <ellipse cx="28" cy="38" rx="7" ry="4" fill="#f4a4b0" transform="rotate(-40 28 38)"/>
-      <ellipse cx="56" cy="38" rx="7" ry="4" fill="#f4a4b0" transform="rotate(40 56 38)"/>
-      <ellipse cx="42" cy="22" rx="4" ry="7" fill="#f4a4b0"/>
-      <ellipse cx="42" cy="54" rx="4" ry="7" fill="#f4a4b0"/>
-      <line x1="42" y1="52" x2="48" y2="75" stroke="#a8c880" stroke-width="1.5" stroke-linecap="round"/>
-      <ellipse cx="52" cy="70" rx="8" ry="5" fill="#b8d890" transform="rotate(-30 52 70)"/>
-    </g>
-    <g opacity="0.45" transform="translate(620,30)">
-      <circle cx="0" cy="0" r="13" fill="#d4b8f0"/>
-      <circle cx="0" cy="0" r="5" fill="#f0e4fc"/>
-      <ellipse cx="-14" cy="0" rx="6" ry="4" fill="#c4a4e8" transform="rotate(-30 -14 0)"/>
-      <ellipse cx="14" cy="0" rx="6" ry="4" fill="#c4a4e8" transform="rotate(30 14 0)"/>
-      <ellipse cx="0" cy="-14" rx="4" ry="6" fill="#c4a4e8"/>
-      <ellipse cx="0" cy="14" rx="4" ry="6" fill="#c4a4e8"/>
-      <line x1="0" y1="14" x2="-6" y2="40" stroke="#a8c880" stroke-width="1.5" stroke-linecap="round"/>
-      <ellipse cx="-10" cy="36" rx="7" ry="4" fill="#b8d890" transform="rotate(20 -10 36)"/>
-    </g>
-    <g opacity="0.38" transform="translate(10,540)">
-      <circle cx="0" cy="0" r="11" fill="#fce0a4"/>
-      <circle cx="0" cy="0" r="4" fill="#fff4d4"/>
-      <ellipse cx="-12" cy="0" rx="6" ry="3.5" fill="#f4cc78" transform="rotate(-20 -12 0)"/>
-      <ellipse cx="12" cy="0" rx="6" ry="3.5" fill="#f4cc78" transform="rotate(20 12 0)"/>
-      <ellipse cx="0" cy="-12" rx="3.5" ry="6" fill="#f4cc78"/>
-      <ellipse cx="0" cy="12" rx="3.5" ry="6" fill="#f4cc78"/>
-      <line x1="4" y1="12" x2="10" y2="36" stroke="#a8c880" stroke-width="1.5" stroke-linecap="round"/>
-      <ellipse cx="14" cy="32" rx="7" ry="4" fill="#b8d890" transform="rotate(-20 14 32)"/>
-    </g>
-    <g opacity="0.4" transform="translate(660,540)">
-      <circle cx="0" cy="0" r="12" fill="#f4b8c8"/>
-      <circle cx="0" cy="0" r="5" fill="#fde4ec"/>
-      <ellipse cx="-13" cy="0" rx="6" ry="4" fill="#e89cb0" transform="rotate(15 -13 0)"/>
-      <ellipse cx="13" cy="0" rx="6" ry="4" fill="#e89cb0" transform="rotate(-15 13 0)"/>
-      <ellipse cx="0" cy="-13" rx="4" ry="6" fill="#e89cb0"/>
-      <ellipse cx="0" cy="13" rx="4" ry="6" fill="#e89cb0"/>
-      <line x1="-4" y1="13" x2="-8" y2="36" stroke="#a8c880" stroke-width="1.5" stroke-linecap="round"/>
-      <ellipse cx="-12" cy="32" rx="7" ry="4" fill="#b8d890" transform="rotate(25 -12 32)"/>
-    </g>
-    <g opacity="0.3" transform="translate(340,10)">
-      <ellipse cx="0" cy="0" rx="5" ry="9" fill="#c8dca8"/>
-      <ellipse cx="12" cy="4" rx="5" ry="9" fill="#b8d090" transform="rotate(25 12 4)"/>
-      <ellipse cx="-12" cy="4" rx="5" ry="9" fill="#b8d090" transform="rotate(-25 -12 4)"/>
-      <line x1="0" y1="9" x2="0" y2="30" stroke="#a0b870" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="0" cy="-2" r="5" fill="#f4e0b8"/>
-    </g>
-    <g opacity="0.28" transform="translate(340,600)">
-      <ellipse cx="0" cy="0" rx="5" ry="8" fill="#c8dca8"/>
-      <ellipse cx="11" cy="-3" rx="5" ry="8" fill="#b8d090" transform="rotate(20 11 -3)"/>
-      <ellipse cx="-11" cy="-3" rx="5" ry="8" fill="#b8d090" transform="rotate(-20 -11 -3)"/>
-    </g>
-    <g opacity="0.22" transform="translate(120,580)">
-      <circle cx="0" cy="0" r="9" fill="#a8d0b8"/>
-      <circle cx="0" cy="0" r="3.5" fill="#d4ece0"/>
-      <ellipse cx="-10" cy="0" rx="5" ry="3" fill="#8cc0a4"/>
-      <ellipse cx="10" cy="0" rx="5" ry="3" fill="#8cc0a4"/>
-      <ellipse cx="0" cy="-10" rx="3" ry="5" fill="#8cc0a4"/>
-      <ellipse cx="0" cy="10" rx="3" ry="5" fill="#8cc0a4"/>
-    </g>
-    <g opacity="0.22" transform="translate(580,100)">
-      <circle cx="0" cy="0" r="9" fill="#f0c8d0"/>
-      <circle cx="0" cy="0" r="3.5" fill="#fde8ec"/>
-      <ellipse cx="-10" cy="0" rx="5" ry="3" fill="#e4a8b8"/>
-      <ellipse cx="10" cy="0" rx="5" ry="3" fill="#e4a8b8"/>
-      <ellipse cx="0" cy="-10" rx="3" ry="5" fill="#e4a8b8"/>
-      <ellipse cx="0" cy="10" rx="3" ry="5" fill="#e4a8b8"/>
-    </g>
-    <line x1="20" y1="100" x2="60" y2="200" stroke="#c8dca8" stroke-width="1" stroke-dasharray="4,6" opacity="0.4"/>
-    <line x1="660" y1="200" x2="640" y2="380" stroke="#e8c4d0" stroke-width="1" stroke-dasharray="4,6" opacity="0.35"/>
+  <svg class="bg-floral" viewBox="0 0 400 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <g opacity="0.5"><circle cx="30" cy="35" r="13" fill="#f9c4c8"/><circle cx="30" cy="35" r="5" fill="#fde8d0"/><ellipse cx="18" cy="35" rx="6" ry="3.5" fill="#f4a4b0" transform="rotate(-40 18 35)"/><ellipse cx="42" cy="35" rx="6" ry="3.5" fill="#f4a4b0" transform="rotate(40 42 35)"/><ellipse cx="30" cy="22" rx="3.5" ry="6" fill="#f4a4b0"/><ellipse cx="30" cy="48" rx="3.5" ry="6" fill="#f4a4b0"/><line x1="30" y1="47" x2="36" y2="68" stroke="#a8c880" stroke-width="1.5" stroke-linecap="round"/><ellipse cx="40" cy="64" rx="7" ry="4" fill="#b8d890" transform="rotate(-30 40 64)"/></g>
+    <g opacity="0.4" transform="translate(370,28)"><circle cx="0" cy="0" r="12" fill="#d4b8f0"/><circle cx="0" cy="0" r="4.5" fill="#f0e4fc"/><ellipse cx="-13" cy="0" rx="5.5" ry="3.5" fill="#c4a4e8" transform="rotate(-30 -13 0)"/><ellipse cx="13" cy="0" rx="5.5" ry="3.5" fill="#c4a4e8" transform="rotate(30 13 0)"/><ellipse cx="0" cy="-13" rx="3.5" ry="5.5" fill="#c4a4e8"/><ellipse cx="0" cy="13" rx="3.5" ry="5.5" fill="#c4a4e8"/><line x1="0" y1="13" x2="-5" y2="36" stroke="#a8c880" stroke-width="1.5" stroke-linecap="round"/></g>
+    <g opacity="0.35" transform="translate(10,620)"><circle cx="0" cy="0" r="10" fill="#fce0a4"/><circle cx="0" cy="0" r="3.5" fill="#fff4d4"/><ellipse cx="-11" cy="0" rx="5.5" ry="3" fill="#f4cc78" transform="rotate(-20 -11 0)"/><ellipse cx="11" cy="0" rx="5.5" ry="3" fill="#f4cc78" transform="rotate(20 11 0)"/><ellipse cx="0" cy="-11" rx="3" ry="5.5" fill="#f4cc78"/><ellipse cx="0" cy="11" rx="3" ry="5.5" fill="#f4cc78"/></g>
+    <g opacity="0.38" transform="translate(380,620)"><circle cx="0" cy="0" r="11" fill="#f4b8c8"/><circle cx="0" cy="0" r="4.5" fill="#fde4ec"/><ellipse cx="-12" cy="0" rx="5.5" ry="3.5" fill="#e89cb0" transform="rotate(15 -12 0)"/><ellipse cx="12" cy="0" rx="5.5" ry="3.5" fill="#e89cb0" transform="rotate(-15 12 0)"/><ellipse cx="0" cy="-12" rx="3.5" ry="5.5" fill="#e89cb0"/><ellipse cx="0" cy="12" rx="3.5" ry="5.5" fill="#e89cb0"/></g>
+    <g opacity="0.28" transform="translate(200,8)"><ellipse cx="0" cy="0" rx="4.5" ry="8" fill="#c8dca8"/><ellipse cx="11" cy="3" rx="4.5" ry="8" fill="#b8d090" transform="rotate(25 11 3)"/><ellipse cx="-11" cy="3" rx="4.5" ry="8" fill="#b8d090" transform="rotate(-25 -11 3)"/><circle cx="0" cy="-2" r="4.5" fill="#f4e0b8"/></g>
+    <line x1="15" y1="120" x2="40" y2="220" stroke="#c8dca8" stroke-width="1" stroke-dasharray="4,6" opacity="0.4"/>
+    <line x1="380" y1="200" x2="360" y2="380" stroke="#e8c4d0" stroke-width="1" stroke-dasharray="4,6" opacity="0.35"/>
   </svg>
 
   <div class="cc-page">
-
     <div id="cc-lock">
       <p class="eyebrow">for someone special</p>
       <div class="card">
-        <svg class="card-corner tl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5 75 Q5 5 75 5" stroke="#d4b896" stroke-width="1" fill="none" stroke-dasharray="3,4"/>
-          <circle cx="16" cy="20" r="7" fill="#f4c4c8"/>
-          <circle cx="16" cy="20" r="2.5" fill="#fde8e8"/>
-          <ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#e8a4a8" transform="rotate(-30 8 20)"/>
-          <ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#e8a4a8" transform="rotate(30 24 20)"/>
-          <ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#e8a4a8"/>
-          <ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#e8a4a8"/>
-          <ellipse cx="28" cy="52" rx="6" ry="4" fill="#c8dca8" transform="rotate(-20 28 52)"/>
-          <ellipse cx="12" cy="58" rx="6" ry="4" fill="#b8d090" transform="rotate(15 12 58)"/>
-          <line x1="20" y1="30" x2="16" y2="50" stroke="#a8c880" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-        <svg class="card-corner tr" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="16" cy="20" r="7" fill="#d4c4f0"/>
-          <circle cx="16" cy="20" r="2.5" fill="#ede4fc"/>
-          <ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#b8a4e0" transform="rotate(-30 8 20)"/>
-          <ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#b8a4e0" transform="rotate(30 24 20)"/>
-          <ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#b8a4e0"/>
-          <ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#b8a4e0"/>
-          <ellipse cx="28" cy="52" rx="6" ry="4" fill="#c8dca8" transform="rotate(-20 28 52)"/>
-          <ellipse cx="12" cy="58" rx="6" ry="4" fill="#b8d090" transform="rotate(15 12 58)"/>
-          <line x1="20" y1="30" x2="16" y2="50" stroke="#a8c880" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-        <svg class="card-corner bl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="16" cy="20" r="7" fill="#fce0a4"/>
-          <circle cx="16" cy="20" r="2.5" fill="#fff4d4"/>
-          <ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#f4cc78" transform="rotate(-30 8 20)"/>
-          <ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#f4cc78" transform="rotate(30 24 20)"/>
-          <ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#f4cc78"/>
-          <ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#f4cc78"/>
-          <ellipse cx="28" cy="52" rx="6" ry="4" fill="#c8dca8" transform="rotate(-20 28 52)"/>
-          <ellipse cx="12" cy="58" rx="6" ry="4" fill="#b8d090" transform="rotate(15 12 58)"/>
-          <line x1="20" y1="30" x2="16" y2="50" stroke="#a8c880" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-        <svg class="card-corner br" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="16" cy="20" r="7" fill="#f4b8c8"/>
-          <circle cx="16" cy="20" r="2.5" fill="#fde4ec"/>
-          <ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#e89cb0" transform="rotate(-30 8 20)"/>
-          <ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#e89cb0" transform="rotate(30 24 20)"/>
-          <ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#e89cb0"/>
-          <ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#e89cb0"/>
-          <ellipse cx="28" cy="52" rx="6" ry="4" fill="#c8dca8" transform="rotate(-20 28 52)"/>
-          <ellipse cx="12" cy="58" rx="6" ry="4" fill="#b8d090" transform="rotate(15 12 58)"/>
-          <line x1="20" y1="30" x2="16" y2="50" stroke="#a8c880" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
+        <svg class="card-corner tl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="20" r="7" fill="#f4c4c8"/><circle cx="16" cy="20" r="2.5" fill="#fde8e8"/><ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#e8a4a8" transform="rotate(-30 8 20)"/><ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#e8a4a8" transform="rotate(30 24 20)"/><ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#e8a4a8"/><ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#e8a4a8"/><ellipse cx="28" cy="52" rx="6" ry="4" fill="#c8dca8" transform="rotate(-20 28 52)"/><ellipse cx="12" cy="58" rx="6" ry="4" fill="#b8d090" transform="rotate(15 12 58)"/><line x1="20" y1="30" x2="16" y2="50" stroke="#a8c880" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <svg class="card-corner tr" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="20" r="7" fill="#d4c4f0"/><circle cx="16" cy="20" r="2.5" fill="#ede4fc"/><ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#b8a4e0" transform="rotate(-30 8 20)"/><ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#b8a4e0" transform="rotate(30 24 20)"/><ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#b8a4e0"/><ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#b8a4e0"/><ellipse cx="28" cy="52" rx="6" ry="4" fill="#c8dca8" transform="rotate(-20 28 52)"/><ellipse cx="12" cy="58" rx="6" ry="4" fill="#b8d090" transform="rotate(15 12 58)"/><line x1="20" y1="30" x2="16" y2="50" stroke="#a8c880" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <svg class="card-corner bl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="20" r="7" fill="#fce0a4"/><circle cx="16" cy="20" r="2.5" fill="#fff4d4"/><ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#f4cc78" transform="rotate(-30 8 20)"/><ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#f4cc78" transform="rotate(30 24 20)"/><ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#f4cc78"/><ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#f4cc78"/></svg>
+        <svg class="card-corner br" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="20" r="7" fill="#f4b8c8"/><circle cx="16" cy="20" r="2.5" fill="#fde4ec"/><ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#e89cb0" transform="rotate(-30 8 20)"/><ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#e89cb0" transform="rotate(30 24 20)"/><ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#e89cb0"/><ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#e89cb0"/></svg>
 
         <div class="lock-icon-wrap">
-          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="10" y="26" width="40" height="27" rx="10" fill="#fce8d8" stroke="#d4a882" stroke-width="1.5"/>
-            <path d="M18 26V20C18 12 42 12 42 20V26" stroke="#c4906a" stroke-width="2" stroke-linecap="round" fill="none"/>
-            <circle cx="30" cy="39" r="4" fill="#c4906a"/>
-            <line x1="30" y1="43" x2="30" y2="48" stroke="#c4906a" stroke-width="2" stroke-linecap="round"/>
-            <ellipse cx="30" cy="18" rx="4" ry="3" fill="#f4c4a4" opacity="0.6"/>
-          </svg>
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="26" width="40" height="27" rx="10" fill="#fce8d8" stroke="#d4a882" stroke-width="1.5"/><path d="M18 26V20C18 12 42 12 42 20V26" stroke="#c4906a" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="30" cy="39" r="4" fill="#c4906a"/><line x1="30" y1="43" x2="30" y2="48" stroke="#c4906a" stroke-width="2" stroke-linecap="round"/><ellipse cx="30" cy="18" rx="4" ry="3" fill="#f4c4a4" opacity="0.6"/></svg>
         </div>
 
         <h2 class="lock-title">enter the secret key</h2>
         <p class="lock-sub">type your birth year to bloom open your surprise</p>
 
         <div class="digit-row">
-          <input class="digit-box" type="tel" maxlength="1" id="c1">
-          <input class="digit-box" type="tel" maxlength="1" id="c2">
-          <input class="digit-box" type="tel" maxlength="1" id="c3">
-          <input class="digit-box" type="tel" maxlength="1" id="c4">
+          <input class="digit-box" type="tel" maxlength="1" id="c1" inputmode="numeric">
+          <input class="digit-box" type="tel" maxlength="1" id="c2" inputmode="numeric">
+          <input class="digit-box" type="tel" maxlength="1" id="c3" inputmode="numeric">
+          <input class="digit-box" type="tel" maxlength="1" id="c4" inputmode="numeric">
         </div>
 
         <button class="unlock-btn" id="cc-unlock-btn">✦ open the garden gate ✦</button>
@@ -344,37 +159,12 @@
         <span>🌸</span><span>🍉</span><span>🌿</span><span>🍉</span><span>🌸</span>
       </div>
       <div class="card" id="cc-scard">
-        <svg class="card-corner tl" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="16" cy="20" r="7" fill="#f4c4c8"/><circle cx="16" cy="20" r="2.5" fill="#fde8e8"/>
-          <ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#e8a4a8" transform="rotate(-30 8 20)"/>
-          <ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#e8a4a8" transform="rotate(30 24 20)"/>
-          <ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#e8a4a8"/>
-          <ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#e8a4a8"/>
-          <ellipse cx="28" cy="52" rx="6" ry="4" fill="#c8dca8" transform="rotate(-20 28 52)"/>
-          <ellipse cx="12" cy="58" rx="6" ry="4" fill="#b8d090" transform="rotate(15 12 58)"/>
-          <line x1="20" y1="30" x2="16" y2="50" stroke="#a8c880" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-        <svg class="card-corner br" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="16" cy="20" r="7" fill="#d4c4f0"/><circle cx="16" cy="20" r="2.5" fill="#ede4fc"/>
-          <ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#b8a4e0" transform="rotate(-30 8 20)"/>
-          <ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#b8a4e0" transform="rotate(30 24 20)"/>
-          <ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#b8a4e0"/>
-          <ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#b8a4e0"/>
-          <ellipse cx="28" cy="52" rx="6" ry="4" fill="#c8dca8" transform="rotate(-20 28 52)"/>
-          <ellipse cx="12" cy="58" rx="6" ry="4" fill="#b8d090" transform="rotate(15 12 58)"/>
-          <line x1="20" y1="30" x2="16" y2="50" stroke="#a8c880" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
+        <svg class="card-corner tl" viewBox="0 0 80 80" fill="none"><circle cx="16" cy="20" r="7" fill="#f4c4c8"/><circle cx="16" cy="20" r="2.5" fill="#fde8e8"/><ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#e8a4a8" transform="rotate(-30 8 20)"/><ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#e8a4a8" transform="rotate(30 24 20)"/><ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#e8a4a8"/><ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#e8a4a8"/><ellipse cx="28" cy="52" rx="6" ry="4" fill="#c8dca8" transform="rotate(-20 28 52)"/><ellipse cx="12" cy="58" rx="6" ry="4" fill="#b8d090" transform="rotate(15 12 58)"/><line x1="20" y1="30" x2="16" y2="50" stroke="#a8c880" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <svg class="card-corner br" viewBox="0 0 80 80" fill="none"><circle cx="16" cy="20" r="7" fill="#d4c4f0"/><circle cx="16" cy="20" r="2.5" fill="#ede4fc"/><ellipse cx="8" cy="20" rx="4" ry="2.5" fill="#b8a4e0" transform="rotate(-30 8 20)"/><ellipse cx="24" cy="20" rx="4" ry="2.5" fill="#b8a4e0" transform="rotate(30 24 20)"/><ellipse cx="16" cy="12" rx="2.5" ry="4" fill="#b8a4e0"/><ellipse cx="16" cy="28" rx="2.5" ry="4" fill="#b8a4e0"/></svg>
 
         <div class="age-ribbon">turning more beautiful this year</div>
-
         <h1 class="wish-title">happy birthday,<br><em>My dear Shifa 🍉</em></h1>
-
-        <div class="vine-divider">
-          <div class="vine-line"></div>
-          <span class="vine-dot">🌿</span>
-          <div class="vine-line"></div>
-        </div>
-
+        <div class="vine-divider"><div class="vine-line"></div><span class="vine-dot">🌿</span><div class="vine-line"></div></div>
         <p class="wish-body">
           Like a garden in full bloom, you have grown into something
           truly <em>extraordinary</em> — gentle, bright, and wonderfully alive.<br><br>
@@ -382,64 +172,101 @@
           laughter that echoes through open fields, and every small joy
           that makes your heart feel <em>at home</em>. 🌷
         </p>
-
         <div class="petal-dots">
           <div class="pdot"></div><div class="pdot"></div><div class="pdot"></div>
           <div class="pdot"></div><div class="pdot"></div>
         </div>
+
+        <button class="music-btn" id="music-toggle" onclick="toggleMusic()">
+          <span class="music-note paused" id="music-note-icon">🎵</span>
+          <span id="music-label"> Tap to play a little melody</span>
+        </button>
       </div>
     </div>
-
   </div>
 </div>
 
 <script>
 (function(){
-  var ids = ['c1','c2','c3','c4'];
-  var SECRET = '2004';
-  document.getElementById('cc-surprise').style.display = 'none';
-
-  ids.forEach(function(id, i){
-    var el = document.getElementById(id);
-    el.addEventListener('input', function(){
-      var v = el.value.replace(/\D/g,'');
-      el.value = v ? v[v.length-1] : '';
-      if(el.value && i < 3) document.getElementById(ids[i+1]).focus();
+  var ids=['c1','c2','c3','c4'];
+  var SECRET='2004';
+  document.getElementById('cc-surprise').style.display='none';
+  ids.forEach(function(id,i){
+    var el=document.getElementById(id);
+    el.addEventListener('input',function(){
+      var v=el.value.replace(/\D/g,'');
+      el.value=v?v[v.length-1]:'';
+      if(el.value&&i<3)document.getElementById(ids[i+1]).focus();
     });
-    el.addEventListener('keydown', function(e){
-      if(e.key==='Backspace' && !el.value && i>0) document.getElementById(ids[i-1]).focus();
+    el.addEventListener('keydown',function(e){
+      if(e.key==='Backspace'&&!el.value&&i>0)document.getElementById(ids[i-1]).focus();
     });
   });
-
-  document.getElementById('cc-unlock-btn').addEventListener('click', function(){
-    var code = ids.map(function(id){ return document.getElementById(id).value; }).join('');
-    var err = document.getElementById('cc-err');
-    if(code.length < 4){ err.textContent = 'please fill in all four digits ~'; shake(); return; }
-    if(code === SECRET){
-      err.textContent = '';
-      document.getElementById('cc-lock').style.display = 'none';
-      var s = document.getElementById('cc-surprise');
-      s.style.display = 'block';
-      s.style.animation = 'fadeup 0.7s ease';
-      var sc = document.getElementById('cc-scard');
-      sc.style.animation = 'popin 0.7s cubic-bezier(0.175,0.885,0.32,1.275)';
+  document.getElementById('cc-unlock-btn').addEventListener('click',function(){
+    var code=ids.map(function(id){return document.getElementById(id).value;}).join('');
+    var err=document.getElementById('cc-err');
+    if(code.length<4){err.textContent='please fill in all four digits ~';shake();return;}
+    if(code===SECRET){
+      err.textContent='';
+      document.getElementById('cc-lock').style.display='none';
+      var s=document.getElementById('cc-surprise');
+      s.style.display='block';
+      s.style.animation='fadeup 0.7s ease';
+      var sc=document.getElementById('cc-scard');
+      sc.style.animation='popin 0.7s cubic-bezier(0.175,0.885,0.32,1.275)';
     } else {
-      err.textContent = "~ that's not quite right, try again ~";
+      err.textContent="~ that's not quite right, try again ~";
       shake();
-      ids.forEach(function(id){ document.getElementById(id).value=''; });
+      ids.forEach(function(id){document.getElementById(id).value='';});
       document.getElementById('c1').focus();
     }
   });
-
   function shake(){
     ids.forEach(function(id){
-      var el = document.getElementById(id);
-      el.style.animation='none'; el.offsetHeight;
+      var el=document.getElementById(id);
+      el.style.animation='none';el.offsetHeight;
       el.style.animation='shake 0.4s ease';
-      setTimeout(function(){ el.style.animation=''; },500);
+      setTimeout(function(){el.style.animation='';},500);
     });
   }
-
   document.getElementById('c1').focus();
 })();
+
+var audioCtx=null;var isPlaying=false;var melodyInterval=null;
+var notes=[523.25,659.25,783.99,880,659.25,523.25,783.99,698.46,659.25,587.33,523.25];
+var idx=0;
+function playNote(freq,dur){
+  if(!audioCtx)return;
+  var o=audioCtx.createOscillator();
+  var g=audioCtx.createGain();
+  o.connect(g);g.connect(audioCtx.destination);
+  o.type='sine';o.frequency.value=freq;
+  g.gain.setValueAtTime(0,audioCtx.currentTime);
+  g.gain.linearRampToValueAtTime(0.18,audioCtx.currentTime+0.04);
+  g.gain.linearRampToValueAtTime(0,audioCtx.currentTime+dur-0.04);
+  o.start(audioCtx.currentTime);
+  o.stop(audioCtx.currentTime+dur);
+}
+function toggleMusic(){
+  var btn=document.getElementById('music-toggle');
+  var noteIcon=document.getElementById('music-note-icon');
+  var lbl=document.getElementById('music-label');
+  if(!audioCtx){audioCtx=new(window.AudioContext||window.webkitAudioContext)();}
+  if(isPlaying){
+    clearInterval(melodyInterval);melodyInterval=null;isPlaying=false;
+    btn.classList.remove('playing');
+    noteIcon.classList.add('paused');
+    lbl.textContent='play a little melody';
+  } else {
+    isPlaying=true;
+    btn.classList.add('playing');
+    noteIcon.classList.remove('paused');
+    lbl.textContent='pause the music';
+    playNote(notes[idx%notes.length],0.38);idx++;
+    melodyInterval=setInterval(function(){
+      if(!isPlaying)return;
+      playNote(notes[idx%notes.length],0.38);idx++;
+    },420);
+  }
+}
 </script>
